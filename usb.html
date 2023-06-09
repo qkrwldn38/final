@@ -56,15 +56,13 @@
 
     <div class="container">
         <br>
-        <h3 class="text-center font-weight-light">노트북 충전기 고르기</h3><br>
+        <h3 class="text-center font-weight-light">USB 고르기</h3><br>
 
         <table class="table table-striped">
             <thead class="table-danger">
                 <th>번호</th>
                 <th>메뉴</th>
-                <!--<th>가격</th>-->
                 <th>수량</th>
-                <!--<th>금액</th>-->
                 <th>추가</th>
                 <th>취소</th>
             </thead>
@@ -73,8 +71,6 @@
 
         <h3>총 대여 수량 : <span id="sum"></span><button class="btn mr-1 btn-outline-danger float-right"
                 onclick="eodu()">대여하기</button></h3>
-
-
     </div>
 </body>
 
@@ -82,29 +78,23 @@
     const menu = [
         {
             id: 1,
-            item: 'LG Gram',
-            //price: 5000,
+            item: '2GB',
             num: 0,
-            //itemPrice: 0,
         },
         {
             id: 2,
-            item: 'SAMSUNG',
-            //price: 5000,
+            item: '8GB',
             num: 0,
-            //itemPrice: 0,
         },
         {
             id: 3,
-            item: 'Macbook',
-            //price: 6000,
+            item: '16GB',
             num: 0,
-            //itemPrice: 0,
         },
     ];
 
     let menuTable = document.getElementById('menuTable');
-    let sumPrice = document.getElementById('sum');
+    let sumnum = document.getElementById('sum');
 
     function generateTable() {
         menuTable.innerHTML = '';
@@ -151,7 +141,7 @@
             item.itemid = item.num;
             sum += item.itemid;
         });
-        sumPrice.innerHTML = new Intl.NumberFormat().format(sum);
+        sumnum.innerHTML = new Intl.NumberFormat().format(sum);
     }
 
     function eodu() {

@@ -56,65 +56,58 @@
 
     <div class="container">
         <br>
-        <h3 class="text-center font-weight-light">노트북 충전기 고르기</h3><br>
+        <h3 class="text-center font-weight-light">케이블 고르기</h3><br>
 
         <table class="table table-striped">
             <thead class="table-danger">
                 <th>번호</th>
                 <th>메뉴</th>
-                <!--<th>가격</th>-->
                 <th>수량</th>
-                <!--<th>금액</th>-->
                 <th>추가</th>
                 <th>취소</th>
             </thead>
             <tbody id="menuTable"></tbody>
         </table>
 
-        <!--<h2>합계 : <span id="sum"></span></h2>-->
+        <h3>총 대여 수량 : <span id="sum"></span><button class="btn mr-1 btn-outline-danger float-right"
+                onclick="eodu()">대여하기</button></h3>
     </div>
 </body>
 
 <script>
     const menu = [
         {
-            id: 0,
-            item: 'LG Gram',
-            //price: 5000,
-            num: 0,
-            //itemPrice: 0,
-        },
-        {
             id: 1,
-            item: 'SAMSUNG',
-            //price: 5000,
+            item: 'USB Type',
             num: 0,
-            //itemPrice: 0,
         },
         {
             id: 2,
-            item: 'Macbook',
-            //price: 6000,
+            item: 'C Type',
             num: 0,
-            //itemPrice: 0,
+        },
+        {
+            id: 3,
+            item: 'Camera',
+            num: 0,
         },
     ];
 
     let menuTable = document.getElementById('menuTable');
-    let sumPrice = document.getElementById('sum');
+    let sumnum = document.getElementById('sum');
 
     function generateTable() {
         menuTable.innerHTML = '';
         menu.forEach(function (item) {
             let tr = `<tr>
-      <td>${item.id}</td>
-      <td>${item.item}</td>
-      <td>${item.num}</td>
-      <td> <button type="button" class="btn btn-danger" onclick="select(${item.id
+    <td>${item.id}</td>
+    <td>${item.item}</td>
+    <td>${item.num}</td>
+    <td> <button type="button" class="btn btn-danger" onclick="select(${item.id
                 })"> + </button> </td>
-      <td> <button type="button" class="btn btn-secondary" onclick="unselect(${item.id
+    <td> <button type="button" class="btn btn-secondary" onclick="unselect(${item.id
                 })"> 0 </button> </td>
-      </tr>`;
+    </tr>`;
             menuTable.innerHTML += tr;
         });
     }
@@ -123,27 +116,39 @@
     calcSum();
 
     function select(item) {
-        menu[item].num += 1;
-        menu[item].itemPrice = menu[item].num * menu[item].price;
-        generateTable();
-        calcSum();
+        if (menu[item - 1].num < 4) { // 최대값인 4보다 작을 경우에만 수량 증가
+            menu[item - 1].num += 1;
+            generateTable();
+            calcSum();
+        } else {
+            alert('최대 4개까지 선택할 수 있습니다.'); // 알림 메시지 출력
+        }
     }
 
     function unselect(item) {
-        menu[item].num = 0;
-        menu[item].itemPrice = menu[item].num * menu[item].price;
-        generateTable();
-        calcSum();
+        if (menu[item - 1].num > 0) { // 최소값인 0보다 클 경우에만 수량 감소
+            menu[item - 1].num = 0;
+            generateTable();
+            calcSum();
+        } else {
+            alert('수량을 선택해주세요.'); // 알림 메시지 출력
+        }
     }
 
     function calcSum() {
         let sum = 0;
         menu.forEach(function (item) {
-            item.itemPrice = item.price * item.num;
-            sum += item.itemPrice;
+            item.itemid = item.num;
+            sum += item.itemid;
         });
-        sumPrice.innerHTML = new Intl.NumberFormat().format(sum);
+        sumnum.innerHTML = new Intl.NumberFormat().format(sum);
     }
+
+    function eodu() {
+        alert("대여가 완료되었습니다~!")
+        location.href = "index.html"
+    }
+
 </script>
 
 </html>
